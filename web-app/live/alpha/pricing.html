@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>About - SonicChat</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.dropotron.min.js"></script>
+		<script src="js/jquery.scrollgress.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+			
+					    <link rel="stylesheet" href="css/PriceStyle.css">
+
+
+		<noscript>
+		
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-wide.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+	</head>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+        <script src="js/jquery.gracefulWebSocket.js"></script>
+		<script type="text/javascript" src="http://localhost:8080/ProjectCV1/webSiteJS/js/1"></script>
+		
+	<body>
+
+	<header id="header" class="skel-layers-fixed">
+				<h1 style = "font-size: 17px;"><a href="index.html">SonicChat</a> by NSC</h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li>
+							<a href="" class="icon fa-angle-down">Menu</a>
+							<ul>
+								<li><a href="about.html">About</a></li>
+								<li><a href="contact.html">Contact</a></li>
+								<li>
+									<a href="">Employee Menu</a>
+									<ul>
+										<li><a href="#" onClick = "noAccess()">Log In</a></li>
+										<li><a href="#" onClick = "noAccess()">Answer-Base</a></li>
+										<li><a href="#" onClick = "noAccess()">Careers</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><a onClick = "scrollToBeta()"  class="button">Sign Up</a></li>
+					</ul>
+				</nav>
+			</header>
+
+
+		<!-- Main -->
+			<section id="main" class="container">
+							<header>
+					<h2>One plan, all <b><span style = "color: #439cff;">success.</span></b></h2>
+
+				</header>
+			
+						<div class="box" style = " ">
+					
+					<h3 style = "text-align: center; margin-bottom: 20px;" >I must be expensive right? <span style = "color: #439cff;">Nope.</span></h3>
+					<div style = "margin:auto; text-align: center;" >
+					<span style = "font-size: 40px; text-align: top; vertical-align: top;">$</span><span style = "font-size: 80px;" >49</span><span style = "font-size: 25px;" >/mo</span><br>
+					<span style = "font-size: 12px;" >*Plus .25 cents per engagement over 1min</span>
+					</div> <br>
+					
+					<p>
+					SonicChat offers your business the opportunity of assisted customer service and management.
+					In other words, our team of customer service representatives handle your
+					customer inquires via our intuitive chat widget located on your company website. A chat
+					widget encourages customers to ask questions and seek help, which increases 
+					satisfaction and leads to a point of sale. However, this is not your normal chat widget.
+					SC can keep records, make appointments, open tickets and carry out similar tasks, much like a
+					personal secretary.
+					</p>
+			</div>
+			
+		
+		
+		<div class="box" style = "text-align: center;" >
+				<h2 style = "color: #777777;" >Sign up for beta access</h2>
+				<p style = "color: #777777;" >Early adopters are always treated well. Go ahead... You know you want to.</p>
+				<div style = "width: 90%; margin: auto;" >
+						<div class="row uniform 50%">
+							<div class="6u 12u(mobilep)">
+								<input type="text" name="name" id="name" value="" placeholder="Name" />
+							</div>
+							<div class="6u 12u(mobilep)">
+								<input type="email" name="email" id="email" value="" placeholder="Email" />
+							</div>
+						</div>
+						<div class="row uniform">
+							<div class="12u">
+								<ul class="actions align-center">
+									<li style = "width: 100%;" ><input type="submit" style = "width: 100%;" onClick = "sendMessage()" value="Sign Up" /></li>
+								</ul>
+							</div>
+						</div>
+						
+						</div>
+				</div>
+		
+		
+		
+			</section>
+			
+		
+			
+	
+			
+
+
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+					<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+					<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; SonicChat. All rights reserved.</li>
+				</ul>
+			</footer>
+			
+	
+			<script>
+			
+			function scrollToBeta() {
+				 $('html, body').animate({
+				scrollTop: $("#cta").offset().top
+				}, 2000);
+			}
+			
+			function noAccess() {
+				alert('You do not have permission to access this feature.');
+			}
+			
+			function signUpSEND() {
+				// ** CODE TO SEND MESSAGE **
+				$('#chatMessageBlock').slideUp();
+				$('#messageSentBlock').slideDown();
+				$('#ChatMessageName').html("Thank you, " + $('#ChatNameInput').val());
+				$.post("http://localhost:8080/ProjectCV1/dataAccess/RecieveAwaymessage", { name: "BETA SIGNUP", contact: $("#signUpBeta").val() ,  message: "INQUIRE" + $("#signUpBeta").val()});
+				return true;
+			}
+			
+			</script>
+			
+		
+
+	</body>
+</html>
