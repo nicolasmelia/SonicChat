@@ -29,6 +29,17 @@ public class MyWebSocketHandler {
 	@OnWebSocketClose
 	public void onClose(Session session, int statusCode, String reason) {
 			establishedConnection = false;
+			if (host) {
+				for (HostObject host : hosts) {
+					if (host.session == this.session) {
+						hosts.remove(host);
+						break;
+					}
+				}
+			} else {
+				// Nothing for now
+			}
+			
 		}
 	
 	@OnWebSocketError
@@ -39,11 +50,13 @@ public class MyWebSocketHandler {
 	@OnWebSocketConnect
 	public void onConnect(Session session) {
 		this.session = session;
-		session.setIdleTimeout(5000000);
+		session.setIdleTimeout(50000000);
+		System.out.print("HELLO IM IN");
 	}
 
 	@OnWebSocketMessage
 	public void onMessage(Session session, String message) {
+		try {
 		if (establishedConnection) {
 			if (!host) {
 				for (HostObject host : hosts) {
@@ -84,7 +97,10 @@ public class MyWebSocketHandler {
 			this.host = Boolean.valueOf(ConnectionResult[1]);
 			this.hostID = ConnectionResult[2];
 		}
-
+		} catch (Exception ex) {
+			System.out.print(ex);
+			
+		}
 	}
 	
 	

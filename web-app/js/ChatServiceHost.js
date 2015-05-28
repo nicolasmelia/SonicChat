@@ -1,7 +1,7 @@
 // Scoped Variables 
 var webSocket;
 var serverAddress = "ws://localhost:"
-var port = "50002";
+var port = "50005";
 var SelectedUserID = 0;
 var connectedUsers = [];
 var displayName;
@@ -66,7 +66,7 @@ function search(message) {
 		}
 	}
 	
-	$.get("http://localhost:8080/ProjectCV1/DataAccess/quickSearch/" + siteID + ":" +  message, function(data) {
+	$.get("/DataAccess/quickSearch/" + siteID + ":" +  message, function(data) {
 		var results = data.split(":::");
 		var res = "";
 		
@@ -191,7 +191,7 @@ function addUserConnection(userID, currentURL, fullURL, siteId) {
 	if (connectedUsers.length > 1) { // 1 is the HOST connection. Do not display button for host
 	// Append the User button
 	$('#userConnections').append('<div class = "user" style = ""  id = "' + userID + '">' + 
-			  '<img  src="/ProjectCV1/static/images/blankavatar.png"   style = "margin-top: 8px;  margin-left: 5px; border-radius: 5px; width: 33px; display:inline-block; float:left;">' +
+			  '<img  src="/static/images/blankavatar.png"   style = "margin-top: 8px;  margin-left: 5px; border-radius: 5px; width: 33px; display:inline-block; float:left;">' +
 				'<table border="1" style="width: 140px; margin-left: 5px;  margin-top: 8px;  border:none; display: inline-block; vertical-align:top;">' +
 				  '<tr >' +
 					'<td style = "padding: 0px; font-color: #ffffff; font-size: 14px; height: 5px; border:none;">User:' + userID + '</td>' +

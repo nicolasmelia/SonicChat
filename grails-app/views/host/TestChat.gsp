@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script src="<g:resource dir="js" file="jquery.gracefulWebSocket.js"/>"></script>
-<script type="text/javascript" src="http://localhost:8080/SonicChatV1/webSiteJS/js/1"></script>
+<script type="text/javascript" src="http://sonicchats.elasticbeanstalk.com/webSiteJS/js/2"></script>
 
 
 
@@ -13,7 +13,7 @@
 
 <body>
 
-	<h1>A Business Web Page 1</h1>
+	<h1>Test Page 1.2</h1>
 	
 	<p  id = "p1" style = "width: 80%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
 	 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 

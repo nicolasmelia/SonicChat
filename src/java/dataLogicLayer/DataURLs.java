@@ -6,8 +6,9 @@ import java.net.URL;
 
 public class DataURLs {
 	
-	private final static String SERVERURL = "http://localhost:8080/ProjectCV1/DataAccess";
-	
+	// private final static String SERVERURL = "http://localhost:8080/SonicChatV1/DataAccess";
+	private final static String SERVERURL = "http://default-environment-pbx8hvmjyf.elasticbeanstalk.com//DataAccess";
+
 
 	// ***** DATA FROM URL ***** 
 	// ** Makes reference to DataAccessController plain text request!

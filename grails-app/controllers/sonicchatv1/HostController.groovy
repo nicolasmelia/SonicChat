@@ -13,26 +13,57 @@ class HostController {
 		}
 	}
 	
-	def startHost() {
+	
+	def startSocketServer() {
+		//Must start socket!
+		
+		if (Host.server == null) {
+			Host.startServer();
+			render "Server has started!"
+		} else if (!Host.server.isStarted()) {
+			Host.startServer();
+			render "Server has started!"
+		} else {
+			render "Server is RUNNING at: " + session.Host.server.getURI().toString();
+		}
+	}
+	
+	def stopSocketServer() {
+		//Must start socket!
+		if (Host.server.isStarted()) {
+			Host.server.stop();
+			Host.thread.interrupt();
+			render "Server has been succesfully been STOPPED"
+		} else {
+			render "Server is not running."
+		}
+	}
+	
+	
+	def StartHostTest() {
 		def hostData = HostData.get(1);
 		if (hostData.systemActive) {
-			// Log in
 			def user = Users.findByUserName("Nick");
 			session["displayName"] = user.displayName
-	
-			hostData.totalActiveHost += 1;
-			hostData.save();
-			
-			Host host = new Host();
-			host.startHost(50002);
 			render (view: "ChatDashboard");
-		} else {
-		render "SYSTEM IS VOLUNTARY CURRENTLY DOWN";
+		}
+	}
+	
+	def StartHostLive() {
+		def hostData = HostData.get(1);
+		if (hostData.systemActive) {
+			def user = Users.findByUserName("Nick");
+			session["displayName"] = user.displayName
+			render (view: "ChatDashboardLive");
 		}
 	}
 	
 
-	def startClient() {
+	def startChatTest() {
 		render (view: "TestChat" )
+	}
+	
+	def testSystem() {
+		render "WORKING"
 	}
 }
