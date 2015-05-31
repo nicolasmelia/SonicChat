@@ -29,7 +29,7 @@ class DataAccessController {
 	// **** Receives data ****
 	def RecieveAwaymessage() {
 		Messages message = new Messages()
-		message.subject = "Message from " +  params.name + " : " + params.contact
+		message.subject = "Message from " +  params.name;
 		message.message = params.message
 		message.email = params.contact
 		message.name = params.name
@@ -40,17 +40,21 @@ class DataAccessController {
 		message.date = date
 		
 		//Save the message
-		message.save()
-		//print(params.name + " " + params.contact + " " + params.message);
-		render(text: "SUCCESS", contentType: "text/plain", encoding: "UTF-8");
+		message.save(flush: true, failOnError: true);
+		
+        render(contentType: 'text/json') {['result:SUCCESS']}
 	}
 	
 	def testHostActive() {
 		def hostData = HostData.get(1);
 		if (hostData.systemActive && hostData.totalActiveHost > 0) { 	
-		render(text: "TRUE", contentType: "text/plain", encoding: "UTF-8");
+		render ('jsonCallback({"result" : "TRUE"});');
+		
 		} else {
-		render(text: "FALSE", contentType: "text/plain", encoding: "UTF-8");
+		//render(text: "falseHost", contentType: "text/plain", encoding: "UTF-8");
+		render ('jsonCallback({"result" : "FALSE"});');
+		
+		
 		}
 	}
 	

@@ -56,7 +56,7 @@
 					<p>Tell us what you think about our little operation.</p>
 				</header>
 				<div class="box">
-					<form method="post" action="#">
+					<div class = "form3" style = "margin: 0 auto; max-width: 100%; width: 25em;" >
 						<div class="row uniform 50%">
 							<div class="6u 12u(mobilep)">
 								<input type="text" name="name" id="name" value="" placeholder="Name" />
@@ -78,13 +78,28 @@
 						<div class="row uniform">
 							<div class="12u">
 								<ul class="actions align-center">
-									<li><input type="submit" onClick = "sendMessage()" value="Send Message" /></li>
+									<li><input type="submit" onClick="return signUpEmail()" value="Send Message" /></li>
 								</ul>
 							</div>
 						</div>
-					</form>
+					</div>
 				</div>
 			</section>
+			
+			
+					<!-- SENT MESSAGE OK -->
+			<div id = "okMessageContainer" style = "top: 0px; z-index: 100; padding-top: 150px; position: absolute!important; width:100%!important; height: 100%!important; display: none;  background-color: rgba(69, 69, 69, 0.3); ">
+				<div  id = "okMessage"  style = "background:#fdfdfd!important; position: fixed!important; margin: auto; right: 0; left: 0; display: none; width: 350px; padding-top: 0px!important; height: 185px; box-shadow:0 .10em .5em rgba(0,0,0,.25);  border-radius: 5px; ">
+					<h2 style = "font-family: Arial, Helvetica, sans-serif;important;  font-size: 22px; color: #313131!important; margin-left: 12px!important; margin-bottom:9px!important;  padding-top:10px!important;">Beta Entry Successful</h2>
+					<hr style = " width: 95%!important; margin: auto!important; border: 0!important; height: 0!important; border-top: 1px solid rgba(0, 0, 0, 0.1)!important; border-bottom: 1px solid rgba(255, 255, 255, 0.3)!important;">
+					<p style = "color: #313131; margin-top: -2px; margin-bottom: 5px;  padding: 10px; line-height: 125%; " >Welcome to SonicChat! You will be notified with instructions and your personal beta access key by <span style = "color:#4abbff;">9/10/2015</span><p>
+					<button onClick = "messageOK()"  class ="MessageOK">OK</button>
+				
+				</div>
+			</div>
+			<!-- SENT MESSAGE OK -->
+			
+
 
 		<!-- Footer -->
 			<footer id="footer">
@@ -107,7 +122,7 @@
 				$('#chatMessageBlock').slideUp();
 				$('#messageSentBlock').slideDown();
 				$('#ChatMessageName').html("Thank you, " + $('#ChatNameInput').val());
-				$.post("http://localhost:8080/ProjectCV1/dataAccess/RecieveAwaymessage", { name: $("#name").val(), contact: $("#email").val() ,  message: $("#message").val()});
+				$.post("/dataAccess/RecieveAwaymessage", { name: $("#name").val(), contact: $("#email").val() ,  message: $("#message").val()});
 				return true;
 			}
 			
@@ -127,15 +142,36 @@
 				$('#chatMessageBlock').slideUp();
 				$('#messageSentBlock').slideDown();
 				$('#ChatMessageName').html("Thank you, " + $('#ChatNameInput').val());
-				$.post("http://localhost:8080/ProjectCV1/dataAccess/RecieveAwaymessage", { name: "BETA SIGNUP", contact: $("#signUpBeta").val() ,  message: "INQUIRE" + $("#signUpBeta").val()});
+				$.post("/dataAccess/RecieveAwaymessage", { name: "BETA SIGNUP", contact: $("#signUpBeta").val() ,  message: "INQUIRE" + $("#signUpBeta").val()});
 				return true;
 			}
-
+			
+			function messageOK() {
+				// Hide ok message
+				$('#okMessage').fadeOut('500', function() {
+				$('#okMessageContainer').css('display', 'none');   
+				$(location).attr('href',"index.html");
+				});
+			}
+			
+			function signUpEmail() {
+				// Show ok message
+				if ($("#email").val().indexOf("@") != -1 && $("#email").val() != ""){
+					$('#okMessageContainer').fadeIn('500', function() {
+					$('#okMessage').fadeIn(500);
+					$.post("/dataAccess/RecieveAwaymessage", { name: $("#name").val(), contact: $("#email").val() ,  message: $("#message").val()});
+					});
+					return true;
+				} else {
+				 alert("Please enter a valid Email.");
+				 return false;
+				}
+			}
 			</script>
 			
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
         <script src="js/jquery.gracefulWebSocket.js"></script>
-		<script type="text/javascript" src="http://localhost:8080/ProjectCV1/webSiteJS/js/1"></script>
+		<script type="text/javascript" src="/webSiteJS/js/1"></script>
 
 	</body>
 </html>

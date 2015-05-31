@@ -16,7 +16,6 @@ class HostController {
 	
 	def startSocketServer() {
 		//Must start socket!
-		
 		if (Host.server == null) {
 			Host.startServer();
 			render "Server has started!"

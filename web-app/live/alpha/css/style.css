@@ -212,6 +212,11 @@
 	form {
 		margin: 0 0 2em 0;
 	}
+	
+	
+	.form3 {
+		margin: 0 0 2em 0;
+	}
 
 	label {
 		color: #646464;
@@ -1378,6 +1383,12 @@
 			max-width: 100%;
 			width: 25em;
 		}
+		
+		#cta .form3 {
+			margin: 0 auto;
+			max-width: 100%;
+			width: 25em;
+		}
 
 		#cta input[type="submit"],
 		#cta input[type="reset"],
@@ -1425,3 +1436,19 @@
 		#cta .formerize-placeholder {
 			color: rgba(255, 255, 255, 0.75) !important;
 		}
+		
+		
+.MessageOK {
+display: block!important; 
+color: white!important;  
+width: 150px; 
+text-align: center!important;  
+margin: auto!important;  
+background: #4abbff!important;  
+padding: 6px!important; 
+border-radius: 4px!important;  
+border-style:none!important;  
+}
+.MessageOK:hover {
+background: #71c7fb!important;  
+}

@@ -44,10 +44,10 @@
 						<li>
 							<a href="" class="icon fa-angle-down">Menu</a>
 							<ul>
-								<li><a href="about.html">About</a></li>
+								<li><a href="about.html">About and Pricing</a></li>
 								<li><a href="contact.html">Contact</a></li>
 								<li>
-									<a href="">Employee Menu</a>
+									<a href="">Employee (CSR)</a>
 									<ul>
 										<li><a href="#" onClick = "noAccess()">Log In</a></li>
 										<li><a href="#" onClick = "noAccess()">Answer-Base</a></li>
@@ -76,9 +76,9 @@
 
 				<section class="box special" style = "">
 					<header class="major">
-						<h2>Introducing the <b><span style = "color: #439cff;">Aided</span></b> chat widget.</h2>
+						<h2>Introducing the <b><span style = "color: #5ba0ff;">Aided</span></b> chat widget.</h2>
 					<h3>Your own support center and personal secretary.</h3>
-						<p><b><span style = "color: #439cff;">Sonic</span></b>Chat offers businesses of all sizes the unique opportunity of <b>aided </b><br>chat engagements, located directly on your company’s website.</p>
+						<p><b><span style = "color: #5ba0ff;">Sonic</span></b>Chat offers businesses of all sizes the unique opportunity of <b>aided </b><br>chat engagements, located directly on your company’s website.</p>
 					</header>															
 					 <div id = "slider1" class="slider-wrapper" style = "margin-top: 30px; display:none">
 						<div id="slider" style = "width: 100%;">
@@ -103,21 +103,23 @@
 							<img  style = "width: 90px; margin-top: -5px; margin-bottom: 10px;" src = "images/agent.png">
 
 							<h3>Proactive engagement</h3>
-							<p>SonicChat offers the convenience of on-demand support and encourages customer interaction. Our team 
-								of customer service representatives handle your customer inquires via our intuitive chat widget 
-								located on your company website.
+							<p>SonicChat offers the convenience of on-demand support and encourages customer interaction with an automatic pop-up of our attractive chat widget. Even better, our team 
+								of customer service representatives manage your customers inquires via our advanced chat widget conveniently
+								placed onto your company website.
 							</p>
 						</section>
+						
 						
 				<section>
 							<img  style = "width: 90px; margin-top: -5px; margin-bottom: 10px;" src = "images/secretary.png">
 
 							<h3>Personal Secretary</h3>
 							<p>
-							This is not your normal chat widget. Much like a
-							personal secretary, SC can keep records, make appointments, open tickets and carry out similar
-							tasks. By taking advantage of our appointment and ticket systems you can assure a smoother 
-							communication experience for you and your customers.
+							What makes SonicChat so unique and different? Much like a
+							personal secretary, SonicChat has the ability to store records, schedule appointments, open tickets, and carry out other similar
+							administrative tasks. Furthermore, by taking advantage of our cutting-edge appointment and ticket system, we guarantee a smooth 
+							interactive experience for you and your customers.
+							
 							</p>
 						</section>
 
@@ -131,18 +133,18 @@
 						
 							<h3 >Increased Sales</h3>
 							<p>
-								This solution will grow customer relations while saving your company 
-								thousands in employment cost and training. A chat widget encourages customers
-								to ask questions and seek help, which increases satisfaction and leads to a point of sale.
+								This modern customer service solution will assist your company in strengthening customer relationships while saving your company 
+								thousands of dollars in employment cost and training. Our employees are provided with extensive and proper training in order to handle your customer's questions via SonicChat. SonicChat assures all business owner's that their customer's will be treated respectfully and professionally or your money back! Currently, many multi-million corporations are incorporating a chat widget onto their company website. A chat widget allows customers to comfortably
+								ask direct questions and seek assistance promptly, which increases overall customer satisfaction and drives company sales.
 							</p>
 						</section>
 						<section>
 							<img  style = "width: 90px; margin-top: -5px; margin-bottom: 10px;" src = "images/lock.png">
 							<h3>Protect your customer</h3>
 							<p>
-							SonicChat takes advantage of two way (3DES) data encryption. This means your customer information and full chat history
-							is safe with us. SonicChat does not ask customers for personal, or payment information. Text and task
-							sent via the chat widget are secured and can only be viewed by our representatives or you.
+							As a business owner, you can be assured that your customers will be protected. SonicChat believes that customer protection is an ethic that all good businesses value. SonicChat takes advantage of two way (3DES) data encryption. In short, your customer information and full chat history
+							is completely safe and secure with us. In addition, SonicChat will not ask customers for any personal or payment information. Text and task
+							sent via the chat widget are secured and can only be viewed by our privileged representatives or you!
 							</p>
 						</section>
 					</div>
@@ -184,23 +186,37 @@
 			
 
 		<!-- CTA -->
-			<section id="cta" style = "background-color:#8FB6FF;">
+			<section id="cta" style = "background-color:#5ba0ff;">
 
 				<h2 style = "color: white;" >Sign up for beta access</h2>
 				<p style = "color: white;" >Early adopters are always treated well. Go ahead... You know you want to.</p>
 
-				<form>
+				<div class = "form3" style = "margin: 0 auto; max-width: 100%; width: 25em;">
 					<div class="row uniform 50%">
 						<div class="8u 12u(mobilep)">
 							<input type="email" name="email" id="signUpBeta" placeholder="Email Address" />
 						</div>
 						<div class="4u 12u(mobilep)" style = "font-color: #ffffff; color: #ffffff;">
-							<input type="submit" id  = "none123" value="Sign Up" onClick = "signUpSEND()"class="fit" style = "font-color: #4d4d4d; color: #4d4d4d;" />
+							<input type="submit" id  = "none123" value="Sign Up" onClick = "signUpEmail()" class="fit" style = "font-color: #4d4d4d; color: #4d4d4d;" />
 						</div>
 					</div>
-				</form>
+				</div>
 
 			</section>
+
+			<!-- SENT MESSAGE OK -->
+			<div id = "okMessageContainer" style = "top: 0px; z-index: 100; padding-top: 150px; position: absolute!important; width:100%!important; height: 100%!important; display: none;  background-color: rgba(69, 69, 69, 0.3); ">
+				
+				<div  id = "okMessage"  style = "background:#fdfdfd!important; position: fixed!important; margin: auto; right: 0; left: 0; display: none; width: 350px; padding-top: 0px!important; height: 185px; box-shadow:0 .10em .5em rgba(0,0,0,.25);  border-radius: 5px; ">
+					<h2 style = "font-family: Arial, Helvetica, sans-serif;important;  font-size: 22px; color: #313131!important; margin-left: 12px!important; margin-bottom:9px!important;  padding-top:10px!important;">Beta Entry Successful</h2>
+					<hr style = " width: 95%!important; margin: auto!important; border: 0!important; height: 0!important; border-top: 1px solid rgba(0, 0, 0, 0.1)!important; border-bottom: 1px solid rgba(255, 255, 255, 0.3)!important;">
+					<p style = "color: #313131; margin-top: -2px; margin-bottom: 5px;  padding: 10px; line-height: 125%; " >Welcome to SonicChat! You will be notified with instructions and your personal beta access key by <span style = "color:#4abbff;">9/10/2015</span><p>
+					<button onClick = "messageOK()"  class ="MessageOK">OK</button>
+				
+				</div>
+			</div>
+			<!-- SENT MESSAGE OK -->
+			
 
 		<!-- Footer -->
 			<footer id="footer" style = "margin-bottom: -10px;" >
@@ -219,6 +235,10 @@
 			
 			<script>
 			$(document).ready(function() {
+			$(window).on('beforeunload', function() {
+				$(window).scrollTop(0);
+				});
+				$(this).scrollTop(0);
 				var slider = $('#slider').leanSlider({
 				directionNav: '#slider-direction-nav',
 				controlNav: '#slider-control-nav'
@@ -235,14 +255,26 @@
 				alert('You do not have permission to access this feature.');
 			}
 			
-			function signUpSEND() {
-				// ** CODE TO SEND MESSAGE **
-				$('#chatMessageBlock').slideUp();
-				$('#messageSentBlock').slideDown();
-				$('#ChatMessageName').html("Thank you, " + $('#ChatNameInput').val());
-				$.post("/dataAccess/RecieveAwaymessage", { name: "BETA SIGNUP", contact: $("#signUpBeta").val() ,  message: "INQUIRE" + $("#signUpBeta").val()});
-				return true;
+			
+			function signUpEmail() {
+				// Show ok message
+				if ($("#signUpBeta").val() != "") {
+					$.post("/dataAccess/RecieveAwaymessage", { name: "BETA SIGNUP", contact: $("#signUpBeta").val() ,  message: "INQUIRE: " + $("#signUpBeta").val()});
+					$('#okMessageContainer').fadeIn('500', function() {
+					$('#okMessage').fadeIn(500);
+					});
+				} else {
+				alert("Please enter a valid Email.");
+				}
 			}
+			
+			function messageOK() {
+			// Hide ok message
+			$('#okMessage').fadeOut('500', function() {
+			$('#okMessageContainer').css('display', 'none');
+			location.reload();
+			});
+}
 			
 			
 			

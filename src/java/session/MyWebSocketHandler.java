@@ -32,12 +32,18 @@ public class MyWebSocketHandler {
 			if (host) {
 				for (HostObject host : hosts) {
 					if (host.session == this.session) {
+						// Remove the diconnected host clients 
+						for (ClientObject client : host.connectedClients) {
+								clients.remove(client);
+								host.connectedClients.remove(client);	
+						}
+						// Remove the host
 						hosts.remove(host);
 						break;
 					}
 				}
 			} else {
-				// Nothing for now
+				// Nothing for now... May be a fail safe option soon...
 			}
 			
 		}
@@ -51,7 +57,6 @@ public class MyWebSocketHandler {
 	public void onConnect(Session session) {
 		this.session = session;
 		session.setIdleTimeout(50000000);
-		System.out.print("HELLO IM IN");
 	}
 
 	@OnWebSocketMessage

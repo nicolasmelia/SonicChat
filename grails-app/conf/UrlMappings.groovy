@@ -6,7 +6,8 @@ class UrlMappings {
                 // apply constraints here
             }
         }
-
+		
+		//"/"(view:"/static/live/alpha/index.html")
         "/"(view:"/index")
         "500"(view:'/error')
 	}

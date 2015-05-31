@@ -12,7 +12,6 @@ public class Host {
 	public static void startServer() {
 		thread = new Thread() {
 			public void run() {
-				System.out.println("Hello from a thread!");
 				try {
 						Host.server = new Server(port);
 						WebSocketHandler wsHandler = new WebSocketHandler() {
@@ -27,7 +26,7 @@ public class Host {
 						server.start();
 						server.join();
 				} catch (Exception e) {
-					// Log exception downt he road
+					// Log exception
 				}
 			}
 
