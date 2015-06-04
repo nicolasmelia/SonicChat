@@ -4,12 +4,14 @@ import session.Host
 
 class HostController {
 
+	// ****************** LIVE ******************
+	
     def index() { 
 		def hostData = HostData.get(1);
 		if (hostData.systemActive) {
-		render "System is active without errors."
+		render "Server is RUNNING at: " + session.Host.server.getURI().toString();
 		} else {
-		render "SYSTEM IS VOLUNTARY CURRENTLY DOWN";
+		render "SYSTEM IS VOLUNTARY DOWN...";
 		}
 	}
 	
@@ -23,7 +25,7 @@ class HostController {
 			Host.startServer();
 			render "Server has started!"
 		} else {
-			render "Server is RUNNING at: " + session.Host.server.getURI().toString();
+			render "Server is currently RUNNING at: " + session.Host.server.getURI().toString();
 		}
 	}
 	
@@ -38,6 +40,19 @@ class HostController {
 		}
 	}
 	
+	def StartHostLive() {
+		def hostData = HostData.get(1);
+		if (hostData.systemActive) {
+			def user = Users.findByUserName("Nick");
+			session["displayName"] = user.displayName
+			render (view: "ChatDashboardLive");
+		} else {
+			render "Server is not running."
+		}
+	}
+	
+	
+	// ****************** TESTING ******************
 	
 	def StartHostTest() {
 		def hostData = HostData.get(1);
@@ -45,24 +60,13 @@ class HostController {
 			def user = Users.findByUserName("Nick");
 			session["displayName"] = user.displayName
 			render (view: "ChatDashboard");
+		} else  {
+			render "Server is not running."
 		}
 	}
 	
-	def StartHostLive() {
-		def hostData = HostData.get(1);
-		if (hostData.systemActive) {
-			def user = Users.findByUserName("Nick");
-			session["displayName"] = user.displayName
-			render (view: "ChatDashboardLive");
-		}
-	}
-	
-
 	def startChatTest() {
 		render (view: "TestChat" )
 	}
 	
-	def testSystem() {
-		render "WORKING"
-	}
 }
