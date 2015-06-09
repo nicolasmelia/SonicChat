@@ -4,7 +4,7 @@ import session.Host
 
 class HostController {
 
-	// ****************** LIVE ******************
+	// ****************** LIVE SERVER SOCKET CONTROL ******************
 	
     def index() { 
 		def hostData = HostData.get(1);
@@ -40,7 +40,26 @@ class HostController {
 		}
 	}
 	
-	def StartHostLive() {
+	// ****************** Employee Systems ******************
+	def loginEmployee() {	
+		if (params.username == null && params.password == null){
+			render(view: "login", model: ["message":"Welcome to SonicChat Employee Systems.", "color": "#606060"])
+		} else {
+		def user = Users.findByUserNameAndPassword(params.username, params.password);
+			if (user != null) {
+					session["displayName"] = user.displayName
+					render (view: "ChatDashboardLive");
+			} else {
+			render(view: "login", model: ["message":"*Username or password not found. Please try again.", "color": "red"])	
+			}
+		
+		}	
+	}
+	
+	
+	// ****************** TESTING ******************
+	
+	def StartHostLiveTest() {
 		def hostData = HostData.get(1);
 		if (hostData.systemActive) {
 			def user = Users.findByUserName("Nick");
@@ -50,9 +69,6 @@ class HostController {
 			render "Server is not running."
 		}
 	}
-	
-	
-	// ****************** TESTING ******************
 	
 	def StartHostTest() {
 		def hostData = HostData.get(1);

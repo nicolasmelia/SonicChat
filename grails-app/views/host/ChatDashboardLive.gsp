@@ -30,7 +30,7 @@
                   <li class='last'><a href='#'><span>Contact</span></a></li>
                </ul>
             </li>
-            <li class='last'><a href='#'><span>Log Out</span></a></li>
+            <li class='last'><a href='/host/loginEmployee'><span>Log Out</span></a></li>
          </ul>
       </div>
       <br>
