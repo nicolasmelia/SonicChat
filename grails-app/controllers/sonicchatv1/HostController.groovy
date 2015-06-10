@@ -1,6 +1,7 @@
 package sonicchatv1
 
 import session.Host
+import session.MyWebSocketHandler
 
 class HostController {
 
@@ -16,29 +17,67 @@ class HostController {
 	}
 	
 	
-	def startSocketServer() {
+	def toggleSocketServer() {
 		//Must start socket!
 		if (Host.server == null) {
 			Host.startServer();
-			render "Server has started!"
 		} else if (!Host.server.isStarted()) {
 			Host.startServer();
-			render "Server has started!"
-		} else {
-			render "Server is currently RUNNING at: " + session.Host.server.getURI().toString();
-		}
-	}
-	
-	def stopSocketServer() {
-		//Must start socket!
-		if (Host.server.isStarted()) {
+		} else if (Host.server.isStarted()) {
 			Host.server.stop();
 			Host.thread.interrupt();
-			render "Server has been succesfully been STOPPED"
-		} else {
-			render "Server is not running."
 		}
+		Thread.sleep(3000);
+		redirect(action: "adminStatus")
+		
 	}
+	
+	
+	def toggleAway() {
+		def hostData = HostData.get(1);
+		if (hostData.systemActive) {
+			hostData.systemActive = false;
+			hostData.totalActiveHost = 1;
+			hostData.save()
+		} else {
+			hostData.systemActive = true;
+			hostData.totalActiveHost = 1;
+			hostData.save()
+		}
+		Thread.sleep(3000);
+		redirect(action: "adminStatus")
+	}
+	
+	
+	def forceReset() {
+		MyWebSocketHandler.clients.clear()
+		MyWebSocketHandler.hosts.clear()
+		if (Host.server != null) {
+		Host.server.stop();
+		Host.thread.interrupt();
+		}
+		redirect(action: "adminStatus")
+	}
+		
+	
+	def adminStatus() {	
+		boolean serverStarted = false;
+		boolean away = false;
+		
+		if (Host.server != null) {
+			if (Host.server.isStarted()) { 
+				serverStarted = true;	
+			}
+		}
+		
+		def hostData = HostData.get(1);
+		if (hostData.systemActive) {
+			away = true
+		}
+		
+		render(view: "status", model: ["started": serverStarted.toString(), "away": away.toString()])
+	}
+	
 	
 	// ****************** Employee Systems ******************
 	def loginEmployee() {	
