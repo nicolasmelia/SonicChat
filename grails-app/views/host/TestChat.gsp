@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script src="<g:resource dir="js" file="jquery.gracefulWebSocket.js"/>"></script>
-<script type="text/javascript" src="http://sonicchats.elasticbeanstalk.com/webSiteJS/js/2"></script>
+<script type="text/javascript" src="http://sonicchat.elasticbeanstalk.com/webSiteJS/js/2"></script>
 
 
 

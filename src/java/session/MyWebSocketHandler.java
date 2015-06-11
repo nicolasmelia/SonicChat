@@ -1,6 +1,7 @@
 package session;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import objects.ClientObject;
 import objects.HostObject;
@@ -23,22 +24,28 @@ public class MyWebSocketHandler {
 	// Specific per connected socket
 	private Session session;
 	private boolean establishedConnection = false;
-	private boolean host; // If socket connected is a host	private String hostID;
+	private boolean host; // If socket connected is a host private String hostID;
 	private String hostID;
 	
 	@OnWebSocketClose
 	public void onClose(Session session, int statusCode, String reason) {
 			establishedConnection = false;
 			if (host) {
-				for (HostObject host : hosts) {
+				for (Iterator<HostObject> iterator = hosts.iterator(); iterator.hasNext(); ) {
+					HostObject host = iterator.next();
 					if (host.session == this.session) {
-						// Remove the diconnected host clients 
-						for (ClientObject client : host.connectedClients) {
-								clients.remove(client);
-								host.connectedClients.remove(client);	
+						// Remove the disconnected host clients 		
+						for (Iterator<ClientObject> iterator2 = clients.iterator(); iterator2.hasNext(); ) {
+							ClientObject client = iterator2.next();
+							if (client.hostID == Integer.parseInt(host.hostID)) {
+								client.sendMessage("UHOH!" + ":" + "Sorry this session has ended by error. Refresh this page to reconnect.");
+								//MyWebSocketHandler.clients.remove(client);
+								iterator2.remove();
+							}
 						}
 						// Remove the host
-						hosts.remove(host);
+						//MyWebSocketHandler.hosts.remove(host);
+						iterator.remove();
 						break;
 					}
 				}

@@ -7,7 +7,7 @@ import java.net.URL;
 public class DataURLs {
 	
 	// private final static String SERVERURL = "http://localhost:8080/SonicChatV1/DataAccess";
-	private final static String SERVERURL = "http://default-environment-pbx8hvmjyf.elasticbeanstalk.com//DataAccess";
+	private final static String SERVERURL = "http://sonicchat.elasticbeanstalk.com/DataAccess";
 
 
 	// ***** DATA FROM URL ***** 
@@ -18,19 +18,17 @@ public class DataURLs {
 	}
 
 	
-	
-	
 
 	// ***** CONNECTION TO URL ***** 
-	// Returns Data from URL (Url must be in plain text)
+	// Returns Data from URL (Url must be in plain text and link must be def in controller exact name)
 	public static String getStringData(String link, String ID) {
 		String data;
 		try {
-	        URL whatismyip = new URL(SERVERURL + "/" + link + "/" + ID);
+	        URL url = new URL(SERVERURL + "/" + link + "/" + ID);
 	        BufferedReader in = null;
 	        try {
 	            in = new BufferedReader(new InputStreamReader(
-	                    whatismyip.openStream()));
+	                    url.openStream()));
 	            data = in.readLine();
 	        } finally {
 	            if (in != null) {
@@ -38,7 +36,7 @@ public class DataURLs {
 	            }
 	        }
 		} catch (Exception ex) {
-			data = "NONE";
+			data = "NO-DATA";
 		}
 		return 	data;
     }

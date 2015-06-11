@@ -101,16 +101,11 @@ color: #2E2E2E;
 </div>
 
 <div style ="margin:auto; width: 480px;">
-<div  onClick = "toggleAway()" class = "linkBox" style = "" onClick = "">
-<p class = "textStart" ><b>Toggle System Away</b><br> Status: <b>${away}</b><p>
+<div  onClick = "refreshPage()" class = "linkBox" style = "" onClick = "toggleAway()">
+<p class = "textStart" ><b>Refresh Page</b><br> Refresh Page Status<p>
 </div>
-<div class = "linkBox" style = "" onClick = "">
+<div class = "linkBox" style = "" onClick = "startHost()">
 <p class = "textStart" ><b>Start a Host (LIVE)</b><br>As User: Nick<p>
-</div>
-
-
-<div onClick = "refreshPage()" class = "linkBoxRefreash" style = "" onClick = "">
-<p class = "textRe" ><b>Refresh</b><br><p>
 </div>
 
 </div>
@@ -132,7 +127,7 @@ $( document ).ready(function() {
 // ************ get data here ************
 function forceReset() {
     if (confirm("A reset will stop the socket server. Are you sure?") == true) {
-    	window.open("host/forceReset","_self")
+    	window.open("forceReset","_self");
     } else {
         // NO
     }
@@ -141,7 +136,7 @@ function forceReset() {
 // ************ get data here ************
 function toggleServer() {
     if (confirm("Are you sure you want to toggle Server?") == true) {
-    	window.open("/SonicChatV1/host/toggleSocketServer","_self")
+    	window.open("toggleSocketServer","_self");
     } else {
         // NO
     }
@@ -149,15 +144,18 @@ function toggleServer() {
 
 function toggleAway() {
     if (confirm("Are you sure you want to toggle away?") == true) {
-    	window.open("/SonicChatV1/host/toggleAway","_self")
+    	window.open("toggleAway","_self");
     } else {
         // NO
     }	
 }
 
+function startHost() {
+	window.open("StartHostLiveTest");
+}
 
 function refreshPage() {
-location.reload();	
+	location.reload();	
 }
 
 

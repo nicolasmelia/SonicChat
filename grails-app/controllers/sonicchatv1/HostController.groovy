@@ -28,7 +28,7 @@ class HostController {
 			Host.thread.interrupt();
 		}
 		Thread.sleep(3000);
-		redirect(action: "adminStatus")
+		redirect(action: "adminControls")
 		
 	}
 	
@@ -38,14 +38,15 @@ class HostController {
 		if (hostData.systemActive) {
 			hostData.systemActive = false;
 			hostData.totalActiveHost = 1;
-			hostData.save()
 		} else {
 			hostData.systemActive = true;
 			hostData.totalActiveHost = 1;
-			hostData.save()
 		}
+		
+		hostData.save(failOnError: true)
+		
 		Thread.sleep(3000);
-		redirect(action: "adminStatus")
+		redirect(action: "adminControls")
 	}
 	
 	
@@ -56,11 +57,11 @@ class HostController {
 		Host.server.stop();
 		Host.thread.interrupt();
 		}
-		redirect(action: "adminStatus")
+		redirect(action: "adminControls")
 	}
 		
-	
-	def adminStatus() {	
+	// Page for admin controls
+	def adminControls() {	
 		boolean serverStarted = false;
 		boolean away = false;
 		

@@ -3,6 +3,8 @@ package sonicchatv1
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import session.MyWebSocketHandler
+import java.util.ArrayList
 
 class DataAccessController {
 
@@ -68,13 +70,14 @@ class DataAccessController {
 	
 	def testHostActive() {
 		// request.getRemoteAddr()
-		def hostData = HostData.get(1);
-		if (hostData.systemActive && hostData.totalActiveHost > 0) { 	
-		render ('jsonCallback({"result" : "TRUE"});');
-		
-		} else {
-		//render(text: "falseHost", contentType: "text/plain", encoding: "UTF-8");
-		render ('jsonCallback({"result" : "FALSE"});');
+		//def hostData = HostData.get(1);	
+		if (MyWebSocketHandler.hosts != null){
+			if (MyWebSocketHandler.hosts.size > 0) { 	
+			render ('jsonCallback({"result" : "TRUE"});');
+			} else {
+			//render(text: "falseHost", contentType: "text/plain", encoding: "UTF-8");
+			render ('jsonCallback({"result" : "FALSE"});');
+			}
 		}
 	}
 	// **** Receives data from DIFFERENT ORIGIN URL ****
