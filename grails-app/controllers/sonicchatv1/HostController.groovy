@@ -27,7 +27,7 @@ class HostController {
 			Host.server.stop();
 			Host.thread.interrupt();
 		}
-		Thread.sleep(3000);
+		Thread.sleep(3500);
 		redirect(action: "adminControls")
 		
 	}
@@ -111,6 +111,15 @@ class HostController {
 	}
 	
 	def StartHostTest() {
+		
+		//Must start socket!
+		if (Host.server == null) {
+			Host.startServer();
+		} else if (!Host.server.isStarted()) {
+			Host.startServer();
+		}
+
+		Thread.sleep(3500);
 		def hostData = HostData.get(1);
 		if (hostData.systemActive) {
 			def user = Users.findByUserName("Nick");

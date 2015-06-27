@@ -1,9 +1,7 @@
 @CHARSET "ISO-8859-1";
 
 html {
-background-image: url('../images/host_background.jpg');
- background-size: 100% 100%;
-background-repeat: no-repeat;
+background-color: #A2E9FF;
 margin: 0;
 padding:0;
 }

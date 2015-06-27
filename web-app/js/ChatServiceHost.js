@@ -1,10 +1,12 @@
 // Scoped Variables 
 var webSocket;
-var serverAddress = "ws://localhost:"
+var serverAddress = "ws://localhost"
 var port = "50005";
 var SelectedUserID = 0;
 var connectedUsers = [];
 var displayName;
+
+var nowTyping = false; // toggled every 3seconds to allow a message to be sent to server to show client is typing.
 
 $(document).ready(function() {
 	// Connect to port that has been created by the host		
@@ -15,7 +17,7 @@ $(document).ready(function() {
 
 function connectToServer() {
 	// Connects to the server
-	webSocket = $.gracefulWebSocket(serverAddress + port);
+	webSocket = $.gracefulWebSocket(serverAddress + ":" + port);
 
 	// When the host (Server) disconnects show the user a message
 	var checkConnection = setInterval(function () {
@@ -54,6 +56,20 @@ function sendAndRecieve(){
 			}		
 		}
 	};	
+	
+	
+	// Onkey press send a message to socket to let host know client it typing
+	$("#chatBoxInput").keypress(function(){
+		if (nowTyping == false) {
+			nowTyping = true;
+			sendNowTyping();
+			var typingTimer = setInterval(function () {
+				nowTyping = false;
+				clearInterval(typingTimer); 
+			}, 3000);
+		}
+	});
+	
 }
 
 function search(message) {
@@ -99,6 +115,12 @@ function search(message) {
 		}
 		
 		$("#chatBoxInput").val(""); // clear the chat box;
+	}
+	
+	function sendNowTyping() {
+		if (webSocket.readyState == 1) {
+			webSocket.send(SelectedUserID + ":" + "!TYPING!");
+		}
 	}
 	
 function sendHostInfo() {
@@ -242,4 +264,4 @@ function displayClientsURLHistory(userID) {
 }
 
 
-		
+						

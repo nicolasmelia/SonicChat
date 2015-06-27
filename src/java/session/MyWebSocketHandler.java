@@ -93,9 +93,15 @@ public class MyWebSocketHandler {
 						if (messageSplit[0].matches(client.clientID)) {
 							for (HostObject host : hosts) {
 								if (host.hostID.matches(client.hostID + "")) {
-									client.sendMessage(host.displayName + ":" + message.split(":")[1]);
-									client.SaveMessageToChatHistory("H/" + host.displayName + ":" + message.split(":")[1] );
-									break sendAlgorithm;
+									if (message.split(":")[1].equals("!TYPING!")) {
+										client.sendMessage("!TYPING!");
+									} else {
+										client.sendMessage(host.displayName + ":" + message.split(":")[1]);
+										client.SaveMessageToChatHistory("H/" + host.displayName + ":" + message.split(":")[1] );
+									}
+		
+									break sendAlgorithm;	
+
 								}
 							}
 						}
@@ -110,8 +116,7 @@ public class MyWebSocketHandler {
 			this.hostID = ConnectionResult[2];
 		}
 		} catch (Exception ex) {
-			System.out.print(ex);
-			
+			System.out.print(ex);	
 		}
 	}
 	
