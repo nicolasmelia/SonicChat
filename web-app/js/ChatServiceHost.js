@@ -6,6 +6,7 @@ var SelectedUserID = 0;
 var connectedUsers = [];
 var displayName;
 
+var dotTimer = null; // Timer used to display now typing(from host).
 var nowTyping = false; // toggled every 3seconds to allow a message to be sent to server to show client is typing.
 
 $(document).ready(function() {
@@ -40,20 +41,29 @@ function sendAndRecieve(){
 	// This looks for messages from socket
 	webSocket.onmessage = function (event) {
 		var messageFromServer = event.data;
-		if (!getNewConnectionInformation(messageFromServer)){
-			var message = messageFromServer.split(":");	
-			for (var i = 0; i < connectedUsers.length; ++i) {
-				if (connectedUsers[i].userID == message[0]) {
-					connectedUsers[i].messages.push('<p style = "margin: 4px 5px 4px 2px; font-size: 16px; color: #3c3c3c;"><span class = "searchLink" onClick="search(\'' + message[1] + '\')"><u><b>Customer</b></u></span>: ' + message[1] + '</p>');
-					break;
+		if (!getNewConnectionInformation(messageFromServer)){		
+		var message = messageFromServer.split(":");		
+		  if(message[1] == "!TYPING!") {  
+			  if (SelectedUserID == message[0]) {
+				displayNowTyping(true);
+			  }		
+		  } else {
+				for (var i = 0; i < connectedUsers.length; ++i) {
+					if (connectedUsers[i].userID == message[0]) {
+						connectedUsers[i].messages.push('<p style = "margin: 4px 5px 4px 2px; font-size: 16px; color: #3c3c3c;"><span class = "searchLink" onClick="search(\'' + message[1] + '\')"><u><b>Customer</b></u></span>: ' + message[1] + '</p>');
+						break;
+					}
 				}
-			}
-			// Only show message if message is from selected user
-			if (SelectedUserID == message[0]) {
-					$('#chatBox').append('<p style = "margin: 4px 5px 4px 2px; font-size: 16px; color: #3c3c3c;"><span class = "searchLink" onClick="search(\'' + message[1] + '\')"><u><b>Customer</b></u></span>: ' + message[1] + '</p>');
-					// Scroll to bottom of page when message recieved
-					 $('#chatBox').scrollTop($('#chatBox').prop("scrollHeight"));
-			}		
+				// Only show message if message is from selected user
+				if (SelectedUserID == message[0]) {
+						displayNowTyping(false);
+						$('#chatBox').append('<p style = "margin: 4px 5px 4px 2px; font-size: 16px; color: #3c3c3c;"><span class = "searchLink" onClick="search(\'' + message[1] + '\')"><u><b>Customer</b></u></span>: ' + message[1] + '</p>');
+						// Scroll to bottom of page when message recieved
+						 $('#chatBox').scrollTop($('#chatBox').prop("scrollHeight"));
+				}	
+				
+		  }
+		
 		}
 	};	
 	
@@ -97,9 +107,14 @@ function search(message) {
 } 
 
 	function sendMessage() {
-		if (webSocket.readyState == 1 && $("#chatBoxInput").val() != "") {
+		if (webSocket.readyState == 1 && $("#chatBoxInput").val().replace(" ", "").trim().length > 1) {
 			webSocket.send(SelectedUserID + ": " + $("#chatBoxInput").val());
-			$('#chatBox').append('<p style = "margin: 4px 5px 4px 2px; font-size: 16px; color: #009ac7;"><b>You:</b><span style = "color: #202020;"> ' + $('#chatBoxInput').val() + '</span></p>');
+
+			if ($("#typingP").length) { // If now typing is being displayed append sent message above that
+				$('#typingP').before('<p style = "margin: 4px 5px 4px 2px; font-size: 16px; color: #009ac7;"><b>You:</b><span style = "color: #202020;"> ' + $('#chatBoxInput').val() + '</span></p>');
+			} else {
+				$('#chatBox').append('<p style = "margin: 4px 5px 4px 2px; font-size: 16px; color: #009ac7;"><b>You:</b><span style = "color: #202020;"> ' + $('#chatBoxInput').val() + '</span></p>');
+			}
 			
 			// Scroll to bottom of page when message sent
 			$('#chatBox').scrollTop($('#chatBox').prop("scrollHeight"));
@@ -111,10 +126,12 @@ function search(message) {
 					 break;
 				}
 			}
-			
+			$("#chatBoxInput").val(""); // clear the chat box;
+		} else {
+			alert("You must enter text before you can send a message.");
+			$("#chatBoxInput").val(""); // clear the chat box;
 		}
 		
-		$("#chatBoxInput").val(""); // clear the chat box;
 	}
 	
 	function sendNowTyping() {
@@ -131,6 +148,46 @@ function sendHostInfo() {
 		}
 	}, 500);	
 }	
+
+//****** Following methods change and add display elements to the chat box******
+function displayNowTyping(show){
+	if (show && dotTimer == null) {
+		$('#chatBox').append('<p id = "typingP" style = "font-family: Arial, Helvetica, sans-serif;important; font-weight: 600!important;  margin: 3px 3px 6px 5px!important; color: #949494!important; font-size: 14px!important; line-height: 100%!important;"></p>');
+	
+		// Change text dots(...) per second to show now typing...
+		var dots = ".";
+		var displayCount = 0; // counts how many times this blinks a dot
+		dotTimer = setInterval(function () {
+			
+			$("#typingP").text("Customer is typing" + dots);		
+			$('#chatBox').scrollTop($('#chatBox').prop("scrollHeight"));
+
+			switch (dots) {
+			case ".": dots = "..";
+				break;
+			case "..": dots = "...";
+				break;
+			case "...": dots = "";
+				break;
+			default: dots = ".";
+			}
+			
+			displayCount++;	
+			
+			if (displayCount > 15) {
+				clearInterval(dotTimer); // end the timer
+				dotTimer = null;
+				$("#typingP").remove();
+			}
+		}, 400);
+		
+	} else if ($("#typingP").length && !show) {//Test whether the typingP ID exist.
+		clearInterval(dotTimer); // end the timer
+		dotTimer = null;
+		$("#typingP").remove();
+		$('#chatBox').scrollTop($('#chatBox').prop("scrollHeight"));
+	}
+}
 
 function getNewConnectionInformation(message) {
 	// Retrieves the user id from the message received
@@ -149,7 +206,7 @@ function getNewConnectionInformation(message) {
 		// Display the clients new URL page
 		for (var i = 0; i < connectedUsers.length; ++i) {		
 			if (connectedUsers[i].userID == connectionMessageArray[1]) {
-				connectedUsers[i].URLS.push(usersCurrentURL[1]);
+				connectedUsers[i].URLS.unshift(usersCurrentURL[1]); //unshift adds url string to top of array
 				displayClientsURLHistory(connectedUsers[i].userID);
 				
 				if (connectedUsers[i].userID == SelectedUserID){
@@ -189,6 +246,7 @@ function selectUser(userID, siteURLName) {
 					$('#chatBox').append(connectedUsers[i].messages[j]);
 				}
 				 $('#chatBox').scrollTop($('#chatBox').prop("scrollHeight"));
+				 displayNowTyping(false);
 				 break;
 			}
 		}
@@ -246,7 +304,7 @@ function displayClientsURLHistory(userID) {
 
 	for (var i = 0; i < connectedUsers.length; ++i) {		
 		if (connectedUsers[i].userID == SelectedUserID) {
-			connectedUsers[i].URLS.reverse();
+			//connectedUsers[i].URLS.reverse();
 			for (var j = 0; j < connectedUsers[i].URLS.length; ++j) {	
 				if (j == 0){
 					$('#currentlyViewing').append("<p style = 'margin: 0px; font-size: 15px;'> <span style = 'color: #009ac7;'>" + "Looking at " + "</span>" + connectedUsers[i].URLS[j] + "</p>");

@@ -20,17 +20,37 @@ class DataAccessController {
 	
 	def quickSearch() {
 		String[] query = params.id.split(":");
-		String result = "";
+		String[] querySplit = query[1].split(" ");
 		def answers = AnswerBase.findAll("FROM AnswerBase where siteID = " + query[0]);
+		
+		String result = "";
+		
+		// Brain for finding answers.. TODO
 		for (AnswerBase a1 : answers) {
-				result = result.concat(a1.answer + ":::");
-			}
+			for (String queryString : querySplit) {
+				
+				// Get question tags
+				String tags = a1.tags;
+				try {
+					tags.replace(",", " ")
+				} catch (Exception ex) {
+					tags = "";
+				}	
+				
+				if ((tags.toLowerCase().contains(queryString.toLowerCase())) && queryString.length() > 3) {
+					if (!result.contains(a1.answer)) { // Don't allow duplicate answers
+						result = result.concat(a1.answer + ":::");
+					}
+				}
+					
+			}	
+		}
+		
+		
 		render(text: result, contentType: "text/plain", encoding: "UTF-8");
 	}
+	
 	// **** METHODS USED WITHIN THE SAME ORIGIN URL SERVER ****
-	
-	
-	
 	// **** Receives data from DIFFERENT ORIGIN URL with JSONP. NOTICE THE JSONCALLBACK ****
 	def recieveMessage() {
 		Messages message = new Messages()

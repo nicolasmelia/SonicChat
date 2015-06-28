@@ -38,7 +38,7 @@ public class MyWebSocketHandler {
 						for (Iterator<ClientObject> iterator2 = clients.iterator(); iterator2.hasNext(); ) {
 							ClientObject client = iterator2.next();
 							if (client.hostID == Integer.parseInt(host.hostID)) {
-								client.sendMessage("UHOH!" + ":" + "Sorry this session has ended by error. Refresh this page to reconnect.");
+								client.sendMessage("OOPS!" + ":" + "There was an error. Refresh this page to reconnect.");
 								//MyWebSocketHandler.clients.remove(client);
 								iterator2.remove();
 							}
@@ -81,8 +81,10 @@ public class MyWebSocketHandler {
 				// Save this message to the clients chat history
 				for (ClientObject client : clients) {
 					if (client.session == session) {
+						if (!message.split(":")[1].equals("!TYPING!")) {
 						client.SaveMessageToChatHistory("C/" + message);
-						break;
+						}
+						break;	
 					}
 				}
 				
