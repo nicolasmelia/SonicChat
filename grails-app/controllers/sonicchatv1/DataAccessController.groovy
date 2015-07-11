@@ -1,6 +1,7 @@
 package sonicchatv1
 
 
+import com.google.gson.Gson
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import session.MyWebSocketHandler
@@ -46,7 +47,6 @@ class DataAccessController {
 			}	
 		}
 		
-		
 		render(text: result, contentType: "text/plain", encoding: "UTF-8");
 	}
 	
@@ -88,6 +88,35 @@ class DataAccessController {
 		render ('jsonCallbackAwayMessage({"result" : "SUCCESS"});');
 	}
 	
+	
+	def recieveTicket() {
+		Ticket ticket = new Ticket()
+		ticket.issue = params.issue
+		ticket.email = params.contact
+		ticket.name = params.name
+		ticket.product = params.product
+		
+		//Get the current time from server
+		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		ticket.date = date;
+		
+		// Generate a random ticket ID
+		Random rand = new Random();
+		int randomNum = rand.nextInt((400000 - 150000) + 1) + 150000;
+		def ticketTest = Ticket.findByIssueID(Integer.toString(randomNum));	
+		if (ticketTest == null) {
+			ticket.issueID = Integer.toString(randomNum);
+		} else {
+			ticket.issueID = Integer.toString(rand.nextInt((400000 - 150000) + 1) + 150000);
+		}
+		
+		//Save the ticket to the DB
+		ticket.save();
+		
+		render ('jsonCallbackTicket({"result" : "' + ticket.issueID + '"});');
+	}
+	
 	def testHostActive() {
 		// request.getRemoteAddr()
 		//def hostData = HostData.get(1);	
@@ -102,8 +131,49 @@ class DataAccessController {
 	}
 	// **** Receives data from DIFFERENT ORIGIN URL ****
 	
+	def quickSearchWidget() {
+		String[] query = params.id.split(":");
+		String[] querySplit = query[1].split(" ");
+		def answers = AnswerBase.findAll("FROM AnswerBase where siteID = " + query[0]);
+		
+		String result = "";
+		
+		// Create an empty list to add answers that match too
+		ArrayList<AnswerBase> answerList = new ArrayList<AnswerBase>();
+		
+		// Brain for finding answers.. TODO
+		for (AnswerBase a1 : answers) {
+			for (String queryString : querySplit) {
+				
+				// Get question tags
+				String tags = a1.tags;
+				try {
+					tags.replace(",", " ")
+				} catch (Exception ex) {
+					tags = "";
+				}
+				
+				if ((tags.toLowerCase().contains(queryString.toLowerCase())) && queryString.length() > 3) {
+					if (!result.contains(a1.answer)) { // Don't allow duplicate answers
+						result = result.concat(a1.answer + ":::");
+						answerList.add(a1);
+					}
+				}
+					
+			}
+		}
+		
+		String jsonResults = new Gson().toJson(answerList);
+		
+		// Renders json 
+		render ('jsonCallbackAnswers(' + jsonResults + ');');	
+	}
 	
-	
-	
+	def getTicketById() {
+		def answers = Ticket.findAllByIssueIDOrEmail(params.issueID, params.Email)
+		String jsonResults = new Gson().toJson(answers);
+		// Renders json
+		render ('jsonCallbackTicketStatus(' + jsonResults + ');');
+	}
 	
 }

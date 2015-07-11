@@ -86,10 +86,10 @@ color: #2E2E2E;
 
 
 <div style = "width: 605px;  background-color: #ffffff;     box-shadow: 0 0 10px rgba(0,0,0,0.2); margin:auto; margin-top: 60px;">
-<p style = "width: 100%; text-align: center; color: #2E2E2E; font-size: 23px;  margin: auto; padding-top: 15px; margin-bottom: 10px; margin-top: 0px;" ><b>Admin Server Config</b></p>
+<p style = "width: 100%; text-align: center; color: #2E2E2E; font-size: 23px;  margin: auto; padding-top: 18px; margin-bottom: -5px; margin-top: 0px;" ><b>Admin Server Config</b></p>
 <br>
 
-<hr style = "width: 95%!important; margin: auto!important; border: 0!important; height: 0!important; border-top: 1px solid rgba(0, 0, 0, 0.1)!important; border-bottom: 1px solid rgba(255, 255, 255, 0.3)!important;">
+<hr style = "width: 95%!important; margin: auto!important;  padding: 0px; border: 0!important; height: 0!important; border-top: 1px solid rgba(0, 0, 0, 0.1)!important; border-bottom: 1px solid rgba(255, 255, 255, 0.3)!important;">
 <br>
 <div style ="margin:auto; width: 480px;">
 <div onClick = "toggleServer()" class = "linkBox" style = "" onClick = "toggleServer()">
