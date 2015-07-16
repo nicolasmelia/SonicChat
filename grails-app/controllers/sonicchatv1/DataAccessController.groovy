@@ -8,10 +8,10 @@ import session.MyWebSocketHandler
 import java.util.ArrayList
 
 class DataAccessController {
-
+	
 	// **** METHODS USED WITHIN THE SAME ORIGIN URL SERVER ****
     def index() { 
-		render "Data Access controller is running.";
+		render "You do not have access to this page.";
 	}
 	
 	def getSiteNameByID() {
@@ -52,69 +52,85 @@ class DataAccessController {
 	
 	// **** METHODS USED WITHIN THE SAME ORIGIN URL SERVER ****
 	// **** Receives data from DIFFERENT ORIGIN URL with JSONP. NOTICE THE JSONCALLBACK ****
-	def recieveMessage() {
-		Messages message = new Messages()
-		message.subject = "Message from " +  params.name;
-		message.message = params.message
-		message.email = params.contact
-		message.name = params.name
-		
-		//Get the current time from server
-		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		message.date = date;
-		
-		//Save the message
-		message.save();
-		//message.save(flush: true, failOnError: true);
-		render ('jsonCallbackMessage({"result" : "SUCCESS"});');
+	def recieveMessage() {	
+		if (checkDBSecurity()) {
+			Messages message = new Messages()
+			message.subject = "Message from " +  params.name;
+			message.message = params.message
+			message.email = params.contact
+			message.name = params.name
+			message.requestRemoteAddress = request.getRemoteAddr().toString()
+			//Get the current time from server
+			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			message.date = date;
+			
+			//Save the message
+			message.save();
+			//message.save(flush: true, failOnError: true);
+			render ('jsonCallbackMessage({"result" : "SUCCESS"});');
+		} else {
+			render ('jsonCallbackMessage({"result" : "Server denial"});');
+		}
 	}
 	
 	def recieveAwayMessage() {
-		Messages message = new Messages()
-		message.subject = "Message from " +  params.name;
-		message.message = params.message
-		message.email = params.contact
-		message.name = params.name
-		
-		//Get the current time from server
-		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		message.date = date;
-		
-		//Save the message
-		message.save();
-		//message.save(flush: true, failOnError: true);
-		render ('jsonCallbackAwayMessage({"result" : "SUCCESS"});');
+		if (checkDBSecurity()) {
+			Messages message = new Messages()
+			message.subject = "Message from " +  params.name;
+			message.message = params.message
+			message.email = params.contact
+			message.name = params.name
+			message.requestRemoteAddress = request.getRemoteAddr().toString()
+			
+			//Get the current time from server
+			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			message.date = date;
+			
+			//Save the message
+			message.save();
+			//message.save(flush: true, failOnError: true);
+			render ('jsonCallbackAwayMessage({"result" : "SUCCESS"});');
+		} else {
+			render ('jsonCallbackAwayMessage({"result" : "Server Denial"});');
+		}
 	}
 	
 	
 	def recieveTicket() {
-		Ticket ticket = new Ticket()
-		ticket.issue = params.issue
-		ticket.email = params.contact
-		ticket.name = params.name
-		ticket.product = params.product
-		
-		//Get the current time from server
-		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		ticket.date = date;
-		
-		// Generate a random ticket ID
-		Random rand = new Random();
-		int randomNum = rand.nextInt((400000 - 150000) + 1) + 150000;
-		def ticketTest = Ticket.findByIssueID(Integer.toString(randomNum));	
-		if (ticketTest == null) {
-			ticket.issueID = Integer.toString(randomNum);
+		if (checkDBSecurity()) {
+			Ticket ticket = new Ticket()
+			ticket.issue = params.issue
+			ticket.email = params.contact
+			ticket.name = params.name
+			ticket.product = params.product
+			ticket.requestRemoteAddress = request.getRemoteAddr().toString()
+			//Get the current time from server
+			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			ticket.date = date;
+			
+			// Generate a random ticket ID
+			Random rand = new Random();
+			int randomNum = rand.nextInt((400000 - 150000) + 1) + 150000;
+			def ticketTest = Ticket.findByIssueID(Integer.toString(randomNum));	
+			if (ticketTest == null) {
+				ticket.issueID = Integer.toString(randomNum);
+			} else {
+				ticket.issueID = Integer.toString(rand.nextInt((400000 - 150000) + 1) + 150000);
+			}
+			
+			//Save the ticket to the DB
+			ticket.save();
+			
+			render ('jsonCallbackTicket({"result" : "' + ticket.issueID + '"});');
 		} else {
-			ticket.issueID = Integer.toString(rand.nextInt((400000 - 150000) + 1) + 150000);
+			render ('jsonCallbackTicket({"result" : "' + "Server Blocked" + '"});');
+		
 		}
 		
-		//Save the ticket to the DB
-		ticket.save();
 		
-		render ('jsonCallbackTicket({"result" : "' + ticket.issueID + '"});');
 	}
 	
 	def testHostActive() {
@@ -134,7 +150,7 @@ class DataAccessController {
 	def quickSearchWidget() {
 		String[] query = params.id.split(":");
 		String[] querySplit = query[1].split(" ");
-		def answers = AnswerBase.findAll("FROM AnswerBase where siteID = " + query[0]);
+		def answers = AnswerBase.findAllBySiteID(query[0].toString());
 		
 		String result = "";
 		
@@ -175,5 +191,32 @@ class DataAccessController {
 		// Renders json
 		render ('jsonCallbackTicketStatus(' + jsonResults + ');');
 	}
+	
+	
+	// **** METHODS USED TO CHECK SECURITY ****
+	def checkDBSecurity() {
+		SecurityHash DBRequest = SecurityHash.findByHashId("DBRequest")
+		SecurityHash AllowedDBRequest = SecurityHash.findByHashId("AllowedDBRequest")		
+		if (Integer.parseInt(DBRequest.hash) < Integer.parseInt(AllowedDBRequest.hash)) {
+			// If allowed to make a DB request make sure address of request does not exceed max allowed request
+			def messages = Messages.findAllByRequestRemoteAddress(request.getRemoteAddr().toString());
+			def tickets = Messages.findAllByRequestRemoteAddress(request.getRemoteAddr().toString());
+			
+			if ((messages.size() + tickets.size()) < 50) {	
+				int requestCount = Integer.parseInt(DBRequest.hash)
+				requestCount++
+				DBRequest.hash = requestCount + ""
+				DBRequest.save(flush:true) ;
+				return true;	
+			}	else {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}	
+	}
+	
+	
 	
 }

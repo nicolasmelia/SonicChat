@@ -83,7 +83,7 @@ class HostController {
 	// ****************** Employee Systems ******************
 	def loginEmployee() {	
 		if (params.username == null && params.password == null){
-			render(view: "login", model: ["message":"Welcome to SonicChat Employee Systems.", "color": "#606060"])
+			render(view: "login", model: ["message":"Welcome to SonicChat Chat-Dashboard.", "color": "#606060"])
 		} else {
 		def user = Users.findByUserNameAndPassword(params.username, params.password);
 			if (user != null) {

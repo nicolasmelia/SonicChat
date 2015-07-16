@@ -38,7 +38,7 @@ background: #71c7fb!important;
          </ul>
       </div>
 
-<div  id = "okMessage"  style = "background:#fdfdfd!important; display: block; width: 360px; padding-top: 0px!important; height: 340px; margin-top: 60px;  margin-right: auto!important; box-shadow:0 .10em .5em rgba(0,0,0,.25)!important; margin-left: auto!important; border-radius: 5px!important; ">
+<div  id = "okMessage"  style = "background:#fdfdfd!important; display: block; width: 360px; padding-top: 0px!important; height: 265px; margin-top: 70px;  margin-right: auto!important; box-shadow:0 .10em .5em rgba(0,0,0,.25)!important; margin-left: auto!important; border-radius: 5px!important; ">
 <h2 style = "color: #4abbff!important; margin-left: 12px!important; margin-bottom:9px!important;  padding-top:10px!important;">Login</h2>
 <hr style = " width: 95%!important; margin: auto!important; border: 0!important; height: 0!important; border-top: 1px solid rgba(0, 0, 0, 0.1)!important; border-bottom: 1px solid rgba(255, 255, 255, 0.3)!important;">
 <p style = "color: ${color}; margin-top: -2px; font-size: 14px; margin-bottom: 0px;  padding: 10px;" ><span style = "color: #4abbff;" ><b></b></span>${message}<p>
@@ -46,33 +46,26 @@ background: #71c7fb!important;
 
  <g:form controller="Host" action="loginEmployee">
 
-<div style = "width: 80%; margin: auto; margin-bottom: 10px; margin-top: -5px;">
-<b><span style = 'color: #606060'>UserName</span></b> <br>
-<g:textField name = "username" type = "test" style = "width: 100%; margin: auto;" />
+<div style = "width: 80%; margin: auto; margin-bottom: 10px; margin-top: -10px;">
+<b><span style = 'color: #606060; margin-bottom: 3px;'>UserName</span></b> <br>
+<g:textField name = "username" type = "text" style = "width: 100%; margin: auto; margin-top: 3px;" />
 </div>
 
 
 <div style = "width: 80%; margin: auto;  margin-bottom: -8px;">
-<b><span style = 'color: #606060'>Password</span></b><br>
-<g:textField  name = "password" type = "test" style = "width: 100%; margin: auto; " />
+<b><span style = 'color: #606060; margin-bottom: 3px;'>Password</span></b><br>
+<g:textField  name = "password" type="password" style = "width: 100%; margin: auto; margin-top: 3px; " />
 </div>
 
 <br>
 
 <div style = "width:80%; margin: auto;">
-<g:actionSubmit  value = "Login"  action = "loginEmployee" style = "margin-bottom: 15px;" class ="MessageOK"/>
+<g:actionSubmit  value = "Login"  action = "loginEmployee" style = "margin-bottom: 15px; margin-top: 3px;" class ="MessageOK"/>
 <a style = "color: #51C7EE; padding-top: 5px; display: block;" href = "#"onclick = "noPass()" >Forgot your password?</a>
 </div>
 </g:form>
 
 
-<div  style ="margin-top:9%; height: 50px; bottom: 0px;  vertical-align: bottom;">
-<hr style = " width: 95%!important; margin: auto!important; border: 0!important; height: 0!important; border-top: 1px solid rgba(0, 0, 0, 0.1)!important; border-bottom: 1px solid rgba(255, 255, 255, 0.3)!important;">
-<p style = "color: #606060; margin-top: -2px; margin-bottom: 0px; font-size: 12px; padding: 10px;" ><span style = "color: #4abbff;" ><b></b></span>By signing into the <i>SonicChat Employee System</i> you accept the privacy statement located in the <i>Employee Docs.</i><p>
-
-
-
-</div>
 
 </div>
 

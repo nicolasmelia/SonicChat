@@ -7,6 +7,8 @@ class Messages {
 	String message
 	String subject
 	String name
+	String requestRemoteAddress
+	
 	
 	static constraints = {
 		message maxSize: 30000;
@@ -15,6 +17,8 @@ class Messages {
 		date nullable : true;
 		subject nullable : true;
 		name nullable : true;
+		requestRemoteAddress nullable : true;
+		
 	}
 
 }

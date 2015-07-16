@@ -10,6 +10,7 @@ class Ticket {
 	String name
 	String issueID
 	String product
+	String requestRemoteAddress
 	
 	static constraints = {
 		issue maxSize: 30000;
@@ -19,6 +20,7 @@ class Ticket {
 		name nullable : true;
 		issueID nullable : true;
 		product nullable : true;
+		requestRemoteAddress nullable : true;
 	}
 
 }

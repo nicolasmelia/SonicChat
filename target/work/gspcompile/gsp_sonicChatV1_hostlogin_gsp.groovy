@@ -27,17 +27,17 @@ expressionOut.print(message)
 printHtmlPart(6)
 createTagBody(2, {->
 printHtmlPart(7)
-invokeTag('textField','g',51,['name':("username"),'type':("test"),'style':("width: 100%; margin: auto;")],-1)
+invokeTag('textField','g',51,['name':("username"),'type':("text"),'style':("width: 100%; margin: auto; margin-top: 3px;")],-1)
 printHtmlPart(8)
-invokeTag('textField','g',57,['name':("password"),'type':("test"),'style':("width: 100%; margin: auto; ")],-1)
+invokeTag('textField','g',57,['name':("password"),'type':("password"),'style':("width: 100%; margin: auto; margin-top: 3px; ")],-1)
 printHtmlPart(9)
-invokeTag('actionSubmit','g',63,['value':("Login"),'action':("loginEmployee"),'style':("margin-bottom: 15px;"),'class':("MessageOK")],-1)
+invokeTag('actionSubmit','g',63,['value':("Login"),'action':("loginEmployee"),'style':("margin-bottom: 15px; margin-top: 3px;"),'class':("MessageOK")],-1)
 printHtmlPart(10)
 })
 invokeTag('form','g',66,['controller':("Host"),'action':("loginEmployee")],2)
 printHtmlPart(11)
 })
-invokeTag('captureBody','sitemesh',100,['style':("")],1)
+invokeTag('captureBody','sitemesh',93,['style':("")],1)
 printHtmlPart(12)
 }
 public static final Map JSP_TAGS = new HashMap()
@@ -45,7 +45,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1433812243149L
+public static final long LAST_MODIFIED = 1437008507987L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

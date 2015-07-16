@@ -8,7 +8,12 @@ class UrlMappings {
         }
 		
 		//"/"(view:"/static/live/alpha/index.html")
-        "/"(view:"/index")
+		"/" {
+			controller = "DataAccess"
+			action = "index"
+		}
+		
+        "/SCadmin"(view:"/index")
         "500"(view:'/error')
 	}
 }
