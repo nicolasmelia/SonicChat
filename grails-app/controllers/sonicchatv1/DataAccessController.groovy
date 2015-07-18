@@ -51,29 +51,7 @@ class DataAccessController {
 	}
 	
 	// **** METHODS USED WITHIN THE SAME ORIGIN URL SERVER ****
-	// **** Receives data from DIFFERENT ORIGIN URL with JSONP. NOTICE THE JSONCALLBACK ****
-	def recieveMessage() {	
-		if (checkDBSecurity()) {
-			Messages message = new Messages()
-			message.subject = "Message from " +  params.name;
-			message.message = params.message
-			message.email = params.contact
-			message.name = params.name
-			message.requestRemoteAddress = request.getRemoteAddr().toString()
-			//Get the current time from server
-			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date date = new Date();
-			message.date = date;
-			
-			//Save the message
-			message.save();
-			//message.save(flush: true, failOnError: true);
-			render ('jsonCallbackMessage({"result" : "SUCCESS"});');
-		} else {
-			render ('jsonCallbackMessage({"result" : "Server denial"});');
-		}
-	}
-	
+	// **** Receives data from DIFFERENT ORIGIN URL with JSONP. NOTICE THE JSONCALLBACK ****	
 	def recieveAwayMessage() {
 		if (checkDBSecurity()) {
 			Messages message = new Messages()
@@ -94,6 +72,29 @@ class DataAccessController {
 			render ('jsonCallbackAwayMessage({"result" : "SUCCESS"});');
 		} else {
 			render ('jsonCallbackAwayMessage({"result" : "Server Denial"});');
+		}
+	}
+	
+	def recieveFeedback() {
+		if (checkDBSecurity()) {
+			Messages message = new Messages()
+			message.subject = "Message from " +  params.name;
+			message.message = params.message
+			message.email = params.contact
+			message.name = params.name
+			message.requestRemoteAddress = request.getRemoteAddr().toString()
+			
+			//Get the current time from server
+			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date date = new Date();
+			message.date = date;
+			
+			//Save the message
+			message.save();
+			//message.save(flush: true, failOnError: true);
+			render ('jsonCallbackFeedback({"result" : "SUCCESS"});');
+		} else {
+			render ('jsonCallbackFeedback({"result" : "Server Denial"});');
 		}
 	}
 	
@@ -199,10 +200,10 @@ class DataAccessController {
 		SecurityHash AllowedDBRequest = SecurityHash.findByHashId("AllowedDBRequest")		
 		if (Integer.parseInt(DBRequest.hash) < Integer.parseInt(AllowedDBRequest.hash)) {
 			// If allowed to make a DB request make sure address of request does not exceed max allowed request
-			def messages = Messages.findAllByRequestRemoteAddress(request.getRemoteAddr().toString());
-			def tickets = Messages.findAllByRequestRemoteAddress(request.getRemoteAddr().toString());
+			def messageCount = Messages.countByRequestRemoteAddress(request.getRemoteAddr().toString());
+			def ticketCount = Messages.countByRequestRemoteAddress(request.getRemoteAddr().toString());
 			
-			if ((messages.size() + tickets.size()) < 50) {	
+			if ((messageCount + ticketCount) < 50) {	
 				int requestCount = Integer.parseInt(DBRequest.hash)
 				requestCount++
 				DBRequest.hash = requestCount + ""
