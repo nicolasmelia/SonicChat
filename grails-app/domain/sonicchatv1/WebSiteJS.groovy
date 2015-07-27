@@ -6,7 +6,7 @@ class WebSiteJS {
 	String siteURL;
 	 
 	static constraints = {
-		chatBoxJS maxSize: 100000;
+		chatBoxJS maxSize: 170000;
 		siteID nullable : true
 		chatBoxJS nullable : true
 		siteURL nullable : true

@@ -39,8 +39,6 @@
 /DefaultCacheConfig$_run_closure1_closure2.class
 /DefaultCacheConfig$_run_closure1_closure3.class
 /DefaultCacheConfig.class
-/DefaultWebXmlConfig$_run_closure1.class
-/DefaultWebXmlConfig.class
 /JQueryConfig$_run_closure1.class
 /JQueryConfig.class
 /JQueryPluginResources$_run_closure1.class
@@ -72,11 +70,12 @@
 /ResourcesBootStrap.class
 /UrlMappings$__clinit__closure1.class
 /UrlMappings$__clinit__closure1_closure2.class
-/UrlMappings$__clinit__closure1_closure2_closure3.class
+/UrlMappings$__clinit__closure1_closure2_closure4.class
+/UrlMappings$__clinit__closure1_closure3.class
 /UrlMappings.class
 /asset/
 /resources$_run_closure1.class
 /resources.class
 /sonicchatv1/
-/UrlMappings$__clinit__closure1_closure2_closure4.class
-/UrlMappings$__clinit__closure1_closure3.class
+/DefaultWebXmlConfig$_run_closure1.class
+/DefaultWebXmlConfig.class
