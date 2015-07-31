@@ -29,20 +29,22 @@ createTagBody(1, {->
 printHtmlPart(7)
 expressionOut.print(session.displayName)
 printHtmlPart(8)
-expressionOut.print(resource(dir:'images',file:'blankavatar.png'))
+expressionOut.print(session.siteID)
 printHtmlPart(9)
-expressionOut.print(resource(dir:'images',file:'searchIcon.png'))
+expressionOut.print(resource(dir:'images',file:'blankavatar.png'))
 printHtmlPart(10)
-})
-invokeTag('captureBody','sitemesh',112,[:],1)
+expressionOut.print(resource(dir:'images',file:'searchIcon.png'))
 printHtmlPart(11)
+})
+invokeTag('captureBody','sitemesh',113,[:],1)
+printHtmlPart(12)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1433812317604L
+public static final long LAST_MODIFIED = 1438127441939L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

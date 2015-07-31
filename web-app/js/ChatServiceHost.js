@@ -5,6 +5,7 @@ var port = "50005";
 var SelectedUserID = 0;
 var connectedUsers = [];
 var displayName;
+var hostSiteID;
 
 var dotTimer = null; // Timer used to display now typing(from host).
 var nowTyping = false; // toggled every 3seconds to allow a message to be sent to server to show client is typing.
@@ -143,7 +144,9 @@ function search(message) {
 function sendHostInfo() {
 		var sendInfo = setInterval(function () {
 		if (webSocket.readyState == 1) {
-			webSocket.send("CONNECTION INFORMATION:HOST:" + $('#userDisplayName').val());
+			displayName = $('#userDisplayName').val();
+			hostSiteID = $('#siteID').val();
+			webSocket.send("CONNECTION INFORMATION:HOST:" + displayName + ":" + hostSiteID);
 			clearInterval(sendInfo); // Stop timer
 		}
 	}, 500);	
@@ -322,4 +325,4 @@ function displayClientsURLHistory(userID) {
 }
 
 
-						
+							

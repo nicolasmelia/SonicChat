@@ -63,15 +63,28 @@ public class ClientObject {
 			
 		//Set up the clients siteID (Website the client it from)
 		String clientIDArray[] = Message.split(":");
-		this.siteID =  clientIDArray[2];
+		this.siteID = clientIDArray[2];
 		this.siteMainURL = DataURLs.getSiteNameByID(this.siteID);
 	    
-        Collections.sort(MyWebSocketHandler.hosts); // sorts host, lowest client connections to top
-		this.hostID = Integer.parseInt(MyWebSocketHandler.hosts.get(0).hostID);
-		
-		for (HostObject host : MyWebSocketHandler.hosts) {
+        // Get host with this clients siteID
+        ArrayList<HostObject> hostHolder = new ArrayList<HostObject>();
+    	for (HostObject host : MyWebSocketHandler.hosts) {
+    		if (host.siteID.matches(this.siteID)) {
+    			hostHolder.add(host);	
+    		}		
+    	}
+    
+    	// Sort the available host
+    	try {
+        Collections.sort(hostHolder); // sorts host, lowest client connections to top
+		this.hostID = Integer.parseInt(hostHolder.get(0).hostID);
+    	} catch(Exception ex) {
+    		// ERROR: No host for this siteID
+    	}
+
+    	// Set this client to the host and send connection message
+		for (HostObject host : hostHolder) {
 			String clientBrowserURL[] = Message.split("::");
-			
 			if (host.hostID.matches(this.hostID + "")){
 				host.connectedClients.add(this);
 				host.sendMessage("CONNECTION INFORMATION:" + getConInfo() + "::" + clientBrowserURL[1]);

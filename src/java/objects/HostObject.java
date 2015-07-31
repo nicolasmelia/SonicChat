@@ -13,9 +13,10 @@ public class HostObject implements Comparable<HostObject> {
 
 	public String hostID;
 	public String displayName;
-
-	public ArrayList<String> chatHistory; //Stores all chat history from host and client.
-	public ArrayList<ClientObject> connectedClients; //Stores all client IDs tied to this host.
+	public String siteID;
+	
+	public ArrayList<String> chatHistory; // Stores all chat history from host and client.
+	public ArrayList<ClientObject> connectedClients; // Stores all client IDs tied to this host.
 
 	public boolean establishedConnection = false;
 	
@@ -36,9 +37,11 @@ public class HostObject implements Comparable<HostObject> {
 		hostID = new Integer(session.getRemote().hashCode()).toString();
 		connectedClients = new ArrayList<ClientObject>();
 		sendMessage("CONNECTION INFORMATION:" + hostID + "::" + "None"); 
-		MyWebSocketHandler.hosts.add(this);
-		
+	
 		displayName =  message.split(":")[2];
+		siteID = message.split(":")[3];
+		
+		MyWebSocketHandler.hosts.add(this);
 		
 		return true;
 	}

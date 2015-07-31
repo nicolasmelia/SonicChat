@@ -87,10 +87,11 @@ class HostController {
 		} else {
 		def user = Users.findByUserNameAndPassword(params.username, params.password);
 			if (user != null) {
-					session["displayName"] = user.displayName
-					render (view: "ChatDashboardLive");
+				session["displayName"] = user.displayName
+				session["siteID"] = user.siteID
+				render (view: "ChatDashboardLive");
 			} else {
-			render(view: "login", model: ["message":"*Username or password not found. Please try again.", "color": "red"])	
+				render(view: "login", model: ["message":"*Username or password not found. Please try again.", "color": "red"])	
 			}
 		
 		}	
@@ -104,6 +105,7 @@ class HostController {
 		if (hostData.systemActive) {
 			def user = Users.findByUserName("Nick");
 			session["displayName"] = user.displayName
+			session["siteID"] = user.siteID
 			render (view: "ChatDashboardLive");
 		} else {
 			render "Server is not running."
@@ -111,7 +113,6 @@ class HostController {
 	}
 	
 	def StartHostTest() {
-		
 		//Must start socket!
 		if (Host.server == null) {
 			Host.startServer();
@@ -124,6 +125,7 @@ class HostController {
 		if (hostData.systemActive) {
 			def user = Users.findByUserName("Nick");
 			session["displayName"] = user.displayName
+			session["siteID"] = user.siteID
 			render (view: "ChatDashboard");
 		} else  {
 			render "Server is not running."

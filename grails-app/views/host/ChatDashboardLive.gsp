@@ -10,6 +10,7 @@
    <body>
    
    <input id = "userDisplayName" type="hidden" value="${session.displayName}">
+   <input id = "siteID" type="hidden" value="${session.siteID}">
    
       <div id='cssmenu'>
          <img style = "position: absolute; left: 8px; top: 6px; width: 120px;" src = "/static/images/sonicLogo.png">
