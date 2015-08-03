@@ -32,14 +32,15 @@ background: #71c7fb!important;
   <div id='cssmenu' style = "min-width: 1000px;">
          <img style = "position: absolute; left: 8px; top: 6px; width: 120px;" src = "/static/images/sonicLogo.png">
          <ul>
-            <li class='last'><a href='http://SonicChats.com'><span>Go Home</span></a></li>
-            <li class='last'><a href='http://SonicChats.com'><span>Employee Handbook</span></a></li>
-            <li class='last'><a href='http://SonicChats.com'><span>Training</span></a></li>
+            <li class='last'><a href='http://SonicChats.com'><span>Sign Up</span></a></li>
+            <li class='last'><a href='http://SonicChats.com'><span>Learn about SonicChat</span></a></li>
+            <li class='last'><a href='http://SonicChats.com'><span>Our Blog</span></a></li>
+            
          </ul>
       </div>
 
 <div  id = "okMessage"  style = "background:#fdfdfd!important; display: block; width: 360px; padding-top: 0px!important; height: 265px; margin-top: 70px;  margin-right: auto!important; box-shadow:0 .10em .5em rgba(0,0,0,.25)!important; margin-left: auto!important; border-radius: 5px!important; ">
-<h2 style = "color: #4abbff!important; margin-left: 12px!important; margin-bottom:9px!important;  padding-top:10px!important;">Login</h2>
+<h2 style = "color: #4abbff!important; margin-left: 12px!important; margin-bottom:9px!important;  padding-top:10px!important;">Login to SonicChat</h2>
 <hr style = " width: 95%!important; margin: auto!important; border: 0!important; height: 0!important; border-top: 1px solid rgba(0, 0, 0, 0.1)!important; border-bottom: 1px solid rgba(255, 255, 255, 0.3)!important;">
 <p style = "color: ${color}; margin-top: -2px; font-size: 14px; margin-bottom: 0px;  padding: 10px;" ><span style = "color: #4abbff;" ><b></b></span>${message}<p>
 

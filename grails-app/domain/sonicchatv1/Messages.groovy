@@ -8,7 +8,13 @@ class Messages {
 	String subject
 	String name
 	String requestRemoteAddress
-	
+	String messageType
+	String hash
+	String siteID
+	String messageID
+	boolean deleted // never truly allow deletions 
+	boolean opened // If message is new or not
+	String status 
 	
 	static constraints = {
 		message maxSize: 30000;
@@ -17,8 +23,13 @@ class Messages {
 		date nullable : true;
 		subject nullable : true;
 		name nullable : true;
+		deleted nullable : true;
+		messageID nullable : true;
+		messageType nullable : true;
+		hash nullable : true;
+		siteID nullable : true;
+		status nullable : true;
 		requestRemoteAddress nullable : true;
-		
 	}
 
 }

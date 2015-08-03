@@ -55,16 +55,26 @@ class DataAccessController {
 	def recieveAwayMessage() {
 		if (checkDBSecurity()) {
 			Messages message = new Messages()
-			message.subject = "Message from " +  params.name;
+			message.messageType = "Message"
+			message.subject = "Message"
 			message.message = params.message
 			message.email = params.contact
 			message.name = params.name
+			message.siteID = params.siteID
+			message.deleted = false
+			message.opened = false
 			message.requestRemoteAddress = request.getRemoteAddr().toString()
+			message.status = "New"
+			message.hash = "0"
 			
 			//Get the current time from server
-			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
 			message.date = date;
+			
+			//Create a unique message ID
+			Random rand = new Random();
+			int randomNum = rand.nextInt((400000 - 150000) + 1) + 150000;
+			message.messageID = ("M" + Integer.toString(randomNum))
 			
 			//Save the message
 			message.save();
@@ -78,20 +88,27 @@ class DataAccessController {
 	def recieveFeedback() {
 		if (checkDBSecurity()) {
 			Messages message = new Messages()
-			message.subject = "Message from " +  params.name;
+			message.messageType = "Feedback"
+			message.siteID = params.siteID
+			message.subject = "This is feedback"
 			message.message = params.message
+			message.hash = params.rating
 			message.email = params.contact
-			message.name = params.name
+			message.name = "EMAIL ONLY"
+			message.deleted = false
 			message.requestRemoteAddress = request.getRemoteAddr().toString()
 			
 			//Get the current time from server
-			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
 			message.date = date;
 			
+			//Create a unique message ID
+			Random rand = new Random();
+			int randomNum = rand.nextInt((400000 - 150000) + 1) + 150000;
+			message.messageID = ("F" + Integer.toString(randomNum))
+			
 			//Save the message
 			message.save();
-			//message.save(flush: true, failOnError: true);
 			render ('jsonCallbackFeedback({"result" : "SUCCESS"});');
 		} else {
 			render ('jsonCallbackFeedback({"result" : "Server Denial"});');
@@ -102,36 +119,31 @@ class DataAccessController {
 	def recieveTicket() {
 		if (checkDBSecurity()) {
 			Ticket ticket = new Ticket()
+			ticket.siteID = params.siteID
 			ticket.issue = params.issue
 			ticket.email = params.contact
 			ticket.name = params.name
+			ticket.active = true
+			ticket.opened = true
+			ticket.deleted = false
 			ticket.product = params.product
 			ticket.requestRemoteAddress = request.getRemoteAddr().toString()
+			
 			//Get the current time from server
-			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
 			ticket.date = date;
 			
 			// Generate a random ticket ID
 			Random rand = new Random();
 			int randomNum = rand.nextInt((400000 - 150000) + 1) + 150000;
-			def ticketTest = Ticket.findByIssueID(Integer.toString(randomNum));	
-			if (ticketTest == null) {
-				ticket.issueID = Integer.toString(randomNum);
-			} else {
-				ticket.issueID = Integer.toString(rand.nextInt((400000 - 150000) + 1) + 150000);
-			}
-			
+			ticket.issueID = ("F" + Integer.toString(randomNum))
+
 			//Save the ticket to the DB
 			ticket.save();
-			
-			render ('jsonCallbackTicket({"result" : "' + ticket.issueID + '"});');
+			render ('jsonCallbackTicket({"result" : "' + ticket.issueID + '"});')
 		} else {
-			render ('jsonCallbackTicket({"result" : "' + "Server Blocked" + '"});');
-		
-		}
-		
-		
+			render ('jsonCallbackTicket({"result" : "' + "Server Blocked" + '"});')
+		}	
 	}
 	
 	def testHostActive() {
@@ -207,7 +219,7 @@ class DataAccessController {
 				int requestCount = Integer.parseInt(DBRequest.hash)
 				requestCount++
 				DBRequest.hash = requestCount + ""
-				DBRequest.save(flush:true) ;
+				DBRequest.save(flush:true);
 				return true;	
 			}	else {
 				return false;

@@ -26,6 +26,14 @@ bottom: 0px;
 background-color: #f4f4f4;
 }
 
+.imgButton {
+		opacity: 1.0;
+}
+
+.imgButton: hover {
+	opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
 
 .well{
  width: 850px;  

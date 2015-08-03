@@ -4,10 +4,6 @@
 /objects/
 /org/
 /session/
-/AssetPipelineBootStrap$_closure1.class
-/AssetPipelineBootStrap.class
-/AssetUrlMappings$__clinit__closure1.class
-/AssetUrlMappings.class
 /BootStrap$_closure1.class
 /BootStrap$_closure2.class
 /BootStrap.class
@@ -77,5 +73,9 @@
 /resources$_run_closure1.class
 /resources.class
 /sonicchatv1/
+/AssetPipelineBootStrap$_closure1.class
+/AssetPipelineBootStrap.class
+/AssetUrlMappings$__clinit__closure1.class
+/AssetUrlMappings.class
 /DefaultWebXmlConfig$_run_closure1.class
 /DefaultWebXmlConfig.class

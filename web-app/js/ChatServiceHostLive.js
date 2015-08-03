@@ -36,7 +36,11 @@ function connectToServer() {
 function sendAndRecieve(){
 	$("#chatBoxInput").keyup(function(event){
 		if(event.keyCode == 13){
+			if (connectedUsers.length > 1) {
 			sendMessage();
+			} else {
+				alert("No one to send a message to. Wait for customers.");
+			}
 		}
 	});
 	
@@ -235,9 +239,9 @@ function selectUser(userID, siteURLName) {
 	// Change color of user item selected
 	for (var i = 0; i < connectedUsers.length; ++i) {
 		// Reset color for all other user boxes
-		$("#"+connectedUsers[i].userID).css("background-color","#ebecf9");
+		$("#U"+connectedUsers[i].userID).css("background-color","#ebecf9");
 	}
-	$("#"+userID).css("background-color","#cfe8f0");
+	$("#U"+userID).css("background-color","#cfe8f0");
 
     	//Change the messages shown for the user selected
 		$('#chatBox').html("");
@@ -274,7 +278,7 @@ function addUserConnection(userID, currentURL, fullURL, siteId) {
 
 	if (connectedUsers.length > 1) { // 1 is the HOST connection. Do not display button for host
 	// Append the User button
-	$('#userConnections').append('<div class = "user" style = ""  id = "' + userID + '">' + 
+	$('#userConnections').append('<div class = "user" style = ""  id = "' + 'U' + userID + '">' + 
 			  '<img  src="/static/images/blankavatar.png"   style = "margin-top: 8px;  margin-left: 5px; border-radius: 5px; width: 33px; display:inline-block; float:left;">' +
 				'<table border="1" style="width: 140px; margin-left: 5px;  margin-top: 8px;  border:none; display: inline-block; vertical-align:top;">' +
 				  '<tr >' +
@@ -287,7 +291,7 @@ function addUserConnection(userID, currentURL, fullURL, siteId) {
 			  '</div>');
 	
 	// Append the onClick to the above element
-    $('#' + userID).click(function() {
+    $('#U' + userID).click(function() {
     	selectUser(userID, fullURL);
     });
 	
@@ -300,6 +304,20 @@ function addUserConnection(userID, currentURL, fullURL, siteId) {
 		selectUser(userID, fullURL);
 	}
 	
+}
+
+function endClientsChat() {
+	$("#U" + SelectedUserID).fadeOut(600);
+	for (var i = 0; i < connectedUsers.length; ++i) {
+		if (connectedUsers[i].userID == SelectedUserID) {
+			webSocket.send(SelectedUserID + ":" + "!END!");
+			$('#chatBox').html(""); // clear old messages
+			SelectedUserID = 0;
+			// Remove user from connected user array
+			connectedUsers.splice(i, 1);
+			break;
+		}
+	}
 }
 
 

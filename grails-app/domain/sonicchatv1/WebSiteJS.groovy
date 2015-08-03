@@ -3,6 +3,7 @@ package sonicchatv1
 class WebSiteJS {
 	String siteID;
 	String chatBoxJS;
+	String selectedTiles;
 	String siteURL;
 	 
 	static constraints = {
@@ -10,8 +11,8 @@ class WebSiteJS {
 		siteID nullable : true
 		chatBoxJS nullable : true
 		siteURL nullable : true
+		selectedTiles nullable : true
 	}
-	 
 	 
 	static mapping = {
 		chatBoxJS sqlType: 'longtext'
