@@ -61,10 +61,10 @@
                      <td id = "userNumberRow" style = "border:none;"><b>User:</b></td>
                   </tr>
                   <tr>
-                     <td style = " border:none;">Cleveland, OH</td>
+                     <td style = " border:none;">United States</td>
                   </tr>
                   <tr>
-                     <td style = " border:none;">Returning Customer</td>
+                     <td style = " border:none;">New Customer</td>
                   </tr>
                </table>
                <br>

@@ -50,7 +50,7 @@ public class MyWebSocketHandler {
 					}
 				}
 			} else {
-				// Nothing for now... May be a fail safe option soon...
+				// Nothing for now... May be a fail safe option soon...			
 			}
 			
 		}
@@ -97,6 +97,11 @@ public class MyWebSocketHandler {
 								if (host.hostID.matches(client.hostID + "")) {
 									if (message.split(":")[1].equals("!TYPING!")) {
 										client.sendMessage("!TYPING!");
+									} else if (message.split(":")[1].equals("!TYPING!")) {
+										client.sendMessage("!END!");
+										session.close();
+										 // Remove this client from the client list
+										clients.remove(client);
 									} else {
 										client.sendMessage(host.displayName + ":" + message.split(":")[1]);
 										client.SaveMessageToChatHistory("H/" + host.displayName + ":" + message.split(":")[1] );
@@ -122,6 +127,10 @@ public class MyWebSocketHandler {
 		}
 	}
 	
-	
+	// Kill session of object gets lost, uhoh!
+	@Override
+	protected void finalize() throws Throwable {
+		session.close();
+	}
 
 }
